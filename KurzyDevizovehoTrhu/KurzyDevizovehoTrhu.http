@@ -1,0 +1,6 @@
+@KurzyDevizovehoTrhu_HostAddress = http://localhost:5155
+
+GET {{KurzyDevizovehoTrhu_HostAddress}}/kurzy-devizoveho-trhu/
+Accept: application/json
+
+###
