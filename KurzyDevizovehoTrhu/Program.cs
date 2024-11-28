@@ -79,7 +79,7 @@ app.MapGet("/kurzy-devizoveho-trhu", async (
 .WithOpenApi();
 
 
-static object ConvertTxtToJson(string txtResponse, string? dateFilter, string? currencyCodeFilter)
+static ExchangeRatesDto<CountryExchangeRateDto> ConvertTxtToJson(string txtResponse, string? dateFilter, string? currencyCodeFilter)
 {
   var lines = txtResponse.Split('\n', StringSplitOptions.RemoveEmptyEntries);
 
@@ -128,7 +128,7 @@ static object ConvertTxtToJson(string txtResponse, string? dateFilter, string? c
     });
   }
 
-  return new ExchangeRatesDto
+  return new ExchangeRatesDto<CountryExchangeRateDto>
   {
     Date = date,
     Tag = tag,

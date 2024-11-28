@@ -2,12 +2,12 @@
 
 namespace Kdt.Api.Dtos;
 
-public class ExchangeRatesDto
+public class ExchangeRatesDto<T>
 {
   [JsonPropertyName("Datum")]
   public string Date { get; set; }
   [JsonPropertyName("Tag")]
   public string Tag { get; set; }
   [JsonPropertyName("Směnné kurzy")]
-  public List<CountryExchangeRateDto> ExchangeRates { get; set; }
+  public List<T> ExchangeRates { get; set; }
 }
