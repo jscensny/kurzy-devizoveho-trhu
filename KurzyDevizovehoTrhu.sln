@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.13.35507.96 d17.13
+VisualStudioVersion = 17.13.35507.96
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kdt.Api", "KurzyDevizovehoTrhu\Kdt.Api.csproj", "{F8AB9AB8-877C-4D62-9FDB-B4FA70865AA0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kdt.Api.UnitTests", "Kdt.Api.UnitTests\Kdt.Api.UnitTests.csproj", "{8AF449CF-863E-4D75-9D6C-F63B96D37D1E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{F8AB9AB8-877C-4D62-9FDB-B4FA70865AA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F8AB9AB8-877C-4D62-9FDB-B4FA70865AA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F8AB9AB8-877C-4D62-9FDB-B4FA70865AA0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8AF449CF-863E-4D75-9D6C-F63B96D37D1E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8AF449CF-863E-4D75-9D6C-F63B96D37D1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8AF449CF-863E-4D75-9D6C-F63B96D37D1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8AF449CF-863E-4D75-9D6C-F63B96D37D1E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -4,6 +4,7 @@ using System.Text.Json.Serialization;
 
 using Kdt.Api.Dtos;
 using Kdt.Api.Validators;
+using Kdt.Api.Helpers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -66,7 +67,7 @@ app.MapGet("/kurzy-devizoveho-trhu", async (
     var response = await httpClient.GetStringAsync(apiUrl);
 
     // Transform the TXT response into JSON
-    var jsonResponse = ConvertTxtToJson(response, date, currencyCode );
+    var jsonResponse = ExchangeRatesHelper.ConvertTxtToJson(response, date, currencyCode );
 
     return Results.Json(jsonResponse);
   }
@@ -77,64 +78,5 @@ app.MapGet("/kurzy-devizoveho-trhu", async (
 })
 .WithName("GetExchangeRates")
 .WithOpenApi();
-
-
-static ExchangeRatesDto<CountryExchangeRateDto> ConvertTxtToJson(string txtResponse, string? dateFilter, string? currencyCodeFilter)
-{
-  var lines = txtResponse.Split('\n', StringSplitOptions.RemoveEmptyEntries);
-
-  // Validate the input format
-  if (lines.Length < 2 || !lines[1].StartsWith("zemì|mìna|množství|kód|kurz"))
-  {
-    throw new FormatException("Unexpected format of the input TXT response.");
-  }
-
-  // Extract the header line (first line) for Date and Tag
-  var headerParts = lines[0].Split(' ', StringSplitOptions.RemoveEmptyEntries);
-  if (headerParts.Length < 2)
-  {
-    throw new FormatException("Unexpected format of the header line.");
-  }
-
-
-  var date = headerParts[0];
-  var tag = headerParts[1];
-
-  var exchangeRates = new List<CountryExchangeRateDto>();
-
-  // Parse the data rows (starting from the third line)
-  for (int i = 2; i < lines.Length; i++)
-  {
-    var columns = lines[i].Split('|');
-
-    if (columns.Length != 5)
-    {
-      continue; // Skip malformed lines
-    }
-
-    var currencyCode = columns[3].Trim();
-    if (!string.IsNullOrEmpty(currencyCodeFilter) && !currencyCode.Equals(currencyCodeFilter, StringComparison.OrdinalIgnoreCase))
-    {
-      continue; // Skip rows that don't match the currency code filter
-    }
-
-    exchangeRates.Add(new CountryExchangeRateDto
-    {
-      Country = columns[0].Trim(),
-      Currency = columns[1].Trim(),
-      Amount = int.TryParse(columns[2].Trim(), out var amount) ? amount : 0,
-      Code = columns[3].Trim(),
-      ExchangeRate = double.TryParse(columns[4].Trim().Replace(",", "."), NumberStyles.Any, CultureInfo.InvariantCulture, out var rate) ? rate : 0.0
-    });
-  }
-
-  return new ExchangeRatesDto<CountryExchangeRateDto>
-  {
-    Date = date,
-    Tag = tag,
-    ExchangeRates = exchangeRates
-  };
-}
-
 
 app.Run();
